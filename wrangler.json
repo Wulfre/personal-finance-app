@@ -1,0 +1,10 @@
+{
+	"account_id": "e4aae9c316a0ca48710b7924c48efa8c",
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "personal-finance",
+			"database_id": "19c2f1de-be8d-4463-ba22-33f96e276007"
+		}
+	]
+}
