@@ -1,7 +1,7 @@
 // @ts-check
 
 import cloudflare from "@astrojs/cloudflare"
-import tailwind from "@astrojs/tailwind"
+import tailwind from "@tailwindcss/vite"
 import { defineConfig } from "astro/config"
 
 export default defineConfig({
@@ -11,7 +11,8 @@ export default defineConfig({
 			enabled: true,
 			experimentalJsonConfig: true,
 		},
-		imageService: "passthrough",
 	}),
-	integrations: [tailwind()],
+	vite: {
+		plugins: [tailwind()],
+	},
 })
