@@ -2,7 +2,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
 
 @import "tailwindcss";
+
 @theme {
-	--font-family-sans: "Atkinson Hyperlegible", sans-serif;
-	--font-family-mono: "Source Code Pro", monospace;
+    --font-family-sans: "Atkinson Hyperlegible", sans-serif;
+    --font-family-mono: "Source Code Pro", monospace;
+
+    --color-paper-neutral: hsl(35, 8%, 35%);
+    --color-paper-neutral-muted: hsl(35, 15%, 50%);
+    --color-paper-neutral-bg: hsl(35, 36%, 95%);
+
+    --color-paper-orange: hsl(35, 15%, 31%);
+    --color-paper-orange-muted: hsl(35, 22%, 48%);
+    --color-paper-orange-bg: hsla(35, 100%, 47%, 0.18);
+
+    --color-paper-green: hsl(71, 12%, 30%);
+    --color-paper-green-muted: hsl(71, 19%, 45%);
+    --color-paper-green-bg: hsla(78, 100%, 37%, 0.19);
+
+    --color-paper-teal: hsl(161, 12%, 31%);
+    --color-paper-teal-muted: hsl(161, 19%, 46%);
+    --color-paper-teal-bg: hsla(172, 100%, 37%, 0.15);
+
+    --color-paper-blue: hsl(220, 12%, 34%);
+    --color-paper-blue-muted: hsl(220, 19%, 54%);
+    --color-paper-blue-bg: hsla(220, 100%, 73%, 0.2);
+
+    --color-paper-purple: hsl(300, 12%, 34%);
+    --color-paper-purple-muted: hsl(300, 17%, 53%);
+    --color-paper-purple-bg: hsla(282, 100%, 68%, 0.15);
 }

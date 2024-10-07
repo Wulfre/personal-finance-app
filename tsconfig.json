@@ -1,11 +1,14 @@
 {
-	"extends": "astro/tsconfigs/strictest",
-	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"~/*": ["src/*"]
-		}
-	},
-	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist"]
+    "extends": "astro/tsconfigs/strictest",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["src/*"]
+        },
+        "types": ["@cloudflare/workers-types"],
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact"
+    },
+    "include": [".astro/types.d.ts", "**/*"],
+    "exclude": ["dist"]
 }
