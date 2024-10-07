@@ -7,7 +7,9 @@ export type Auth = Nullable<{
     userId: string
 }>
 
-export type UserSession = Nullable<Record<string, never>>
+export type UserSession = Nullable<{
+    lastRefreshTimestamp: number
+}>
 
 export const scryptConfig = {
     N: 2 ** 16,
@@ -15,3 +17,5 @@ export const scryptConfig = {
     p: 1,
     dkLen: 32,
 } satisfies ScryptOpts
+
+export const sessionTtlSecs = 60 * 15

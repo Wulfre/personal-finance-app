@@ -1,5 +1,6 @@
 import { defineMiddleware } from "astro:middleware"
 import type { UserSession } from "~/actions/auth/common"
+import { sessionTtlSecs } from "~/actions/auth/common"
 
 export default defineMiddleware(async (context, next) => {
     const sessionId = context.cookies.get("sessionId")?.value ?? null
@@ -26,6 +27,20 @@ export default defineMiddleware(async (context, next) => {
     }
 
     const sessionData = JSON.parse(serializedSessionData) as UserSession
+
+    if (
+        sessionData.lastRefreshTimestamp &&
+        Date.now() - sessionData.lastRefreshTimestamp >
+            1000 * sessionTtlSecs * 0.5
+    ) {
+        sessionData.lastRefreshTimestamp = Date.now()
+
+        await context.locals.runtime.env.KV.put(
+            `user:${userId}:session:${sessionId}`,
+            JSON.stringify(sessionData),
+            { expirationTtl: sessionTtlSecs },
+        )
+    }
 
     context.locals.session = sessionData
     return next()

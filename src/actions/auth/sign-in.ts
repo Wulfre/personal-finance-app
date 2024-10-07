@@ -3,10 +3,8 @@ import { bytesToHex } from "@noble/hashes/utils"
 import { ulid } from "@std/ulid"
 import { defineAction } from "astro:actions"
 import { z } from "astro:schema"
-import { dequal } from "dequal"
-import { reduceDuration } from "~/utils/time"
 import type { Auth, UserSession } from "./common"
-import { scryptConfig } from "./common"
+import { scryptConfig, sessionTtlSecs } from "./common"
 
 export default defineAction({
     accept: "form",
@@ -24,7 +22,6 @@ export default defineAction({
         }
 
         const authData = JSON.parse(serialAuthData) as Auth
-        const originalAuthData = structuredClone(authData)
 
         if (!authData.passwordHash || !authData.passwordSalt) {
             throw new Error("invalid user")
@@ -41,9 +38,7 @@ export default defineAction({
 
         if (!authData.userId) {
             authData.userId = ulid()
-        }
 
-        if (!dequal(authData, originalAuthData)) {
             await context.locals.runtime.env.KV.put(
                 `auth:${input.username}`,
                 JSON.stringify(authData),
@@ -52,12 +47,14 @@ export default defineAction({
 
         // create session
         const sessionId = ulid()
-        const sessionData = {} satisfies UserSession
+        const sessionData = {
+            lastRefreshTimestamp: Date.now(),
+        } satisfies UserSession
 
         await context.locals.runtime.env.KV.put(
             `user:${authData.userId}:session:${sessionId}`,
             JSON.stringify(sessionData),
-            { expirationTtl: reduceDuration({ minutes: 15 }, "seconds") },
+            { expirationTtl: sessionTtlSecs },
         )
 
         context.cookies.set("userId", authData.userId, {
