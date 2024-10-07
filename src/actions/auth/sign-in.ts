@@ -45,7 +45,6 @@ export default defineAction({
             )
         }
 
-        // create session
         const sessionId = ulid()
         const sessionData = {
             lastRefreshTimestamp: Date.now(),

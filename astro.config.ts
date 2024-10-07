@@ -1,5 +1,3 @@
-// @ts-check
-
 import cloudflare from "@astrojs/cloudflare"
 import preact from "@astrojs/preact"
 import tailwind from "@tailwindcss/vite"
@@ -12,9 +10,6 @@ export default defineConfig({
             enabled: true,
         },
     }),
-    security: {
-        checkOrigin: true,
-    },
     integrations: [preact()],
     vite: {
         plugins: [tailwind()],
