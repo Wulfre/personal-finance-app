@@ -1,6 +1,6 @@
 import cloudflare from "@astrojs/cloudflare"
 import preact from "@astrojs/preact"
-import tailwind from "@tailwindcss/vite"
+import unocss from "@unocss/astro"
 import { defineConfig } from "astro/config"
 
 export default defineConfig({
@@ -10,8 +10,10 @@ export default defineConfig({
             enabled: true,
         },
     }),
-    integrations: [preact()],
-    vite: {
-        plugins: [tailwind()],
-    },
+    integrations: [
+        preact(),
+        unocss({
+            injectReset: true,
+        }),
+    ],
 })

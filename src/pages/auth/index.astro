@@ -1,0 +1,92 @@
+---
+import { actions } from "astro:actions"
+import Layout from "~/layout.astro"
+
+const signInResult = Astro.getActionResult(actions.auth.signIn)
+
+const { session } = Astro.locals
+
+if (session) {
+    return Astro.redirect("/")
+}
+---
+
+<Layout title="Home">
+    <main>
+        <form
+            method="post"
+            action={actions.auth.signIn}
+            class="flex flex-col w-[40ch] gap-4"
+        >
+            <div class="flex gap-4">
+                <input
+                    type="radio"
+                    name="action"
+                    value="sign-in"
+                    id="action-sign-in"
+                    class="previous hidden"
+                    checked={true}
+                />
+                <label
+                    for="action-sign-in"
+                    class="cursor-pointer p-2 w-full text-center b-1 b-current previous-checked:(bg-paper-orange-bg text-paper-orange)"
+                    >Sign In</label
+                >
+
+                <input
+                    type="radio"
+                    name="action"
+                    value="register"
+                    id="action-register"
+                    class="previous hidden"
+                />
+                <label
+                    for="action-register"
+                    class="cursor-pointer p-2 w-full text-center b-1 b-current previous-checked:(bg-paper-orange-bg text-paper-orange)"
+                    >Register</label
+                >
+            </div>
+
+            <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Username"
+                required={true}
+                class="p-2 b-1 b-current bg-inherit text-inherit outline-none placeholder-text-paper-neutral-muted placeholder-text-opacity-66"
+            />
+
+            <div class="relative">
+                <input
+                    type="checkbox"
+                    name="show-password"
+                    id="show-password"
+                    class="peer hidden"
+                />
+                <label
+                    for="show-password"
+                    class="cursor-pointer hidden peer-checked:block i-ph-eye absolute top-[50%] translate-y-[-50%] right-[-1.5rem]"
+                >
+                </label>
+                <label
+                    for="show-password"
+                    class="cursor-pointer peer-checked:hidden i-ph-eye-closed absolute top-[50%] translate-y-[-50%] right-[-1.5rem]"
+                >
+                </label>
+                <input
+                    type="text"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    required={true}
+                    class="w-full p-2 b-1 b-current bg-inherit text-inherit outline-none placeholder-text-paper-neutral-muted placeholder-text-opacity-66 [-webkit-text-security:disc] peer-checked:[-webkit-text-security:none]"
+                />
+            </div>
+
+            <button type="submit" class="w-full p-2 b-1 b-current"
+                >Continue</button
+            >
+        </form>
+        {signInResult?.error && <p>{signInResult.error.message}</p>}
+    </main>
+</Layout>

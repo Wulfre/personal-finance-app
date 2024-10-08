@@ -1,6 +1,6 @@
 import { defineMiddleware } from "astro:middleware"
-import type { UserSession } from "~/actions/auth/common"
-import { sessionTtlSecs } from "~/actions/auth/common"
+import type { UserSession } from "~/actions/auth/sign-in"
+import { sessionTtlSecs } from "~/actions/auth/sign-in"
 
 export default defineMiddleware(async (context, next) => {
     const sessionId = context.cookies.get("sessionId")?.value ?? null
