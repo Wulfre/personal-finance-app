@@ -3,5 +3,8 @@ export const centsToDollarString = (cents: number) => {
     const sign = string[0] === "-" ? "-" : ""
     const absoluteString = sign === "-" ? string.slice(1) : string
 
-    return `${sign}$${absoluteString.slice(0, -2)}.${absoluteString.slice(-2)}`
+    const wholePart = absoluteString.slice(0, -2).padStart(1, "0")
+    const fractionPart = absoluteString.slice(-2).padStart(2, "0")
+
+    return `${sign}$${wholePart}.${fractionPart}`
 }
