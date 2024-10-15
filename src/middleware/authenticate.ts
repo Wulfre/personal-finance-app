@@ -1,6 +1,6 @@
 import { defineMiddleware } from "astro:middleware"
-import type { UserSession } from "~/actions/auth/sign-in"
-import { sessionTtlSecs } from "~/actions/auth/sign-in"
+import { sessionTtlMs } from "~/actions/auth/sign-in"
+import { db } from "~/db"
 
 export default defineMiddleware(async (context, next) => {
     const sessionId = context.cookies.get("sessionId")?.value ?? null
@@ -17,29 +17,30 @@ export default defineMiddleware(async (context, next) => {
         return next()
     }
 
-    const serializedSessionData = await context.locals.runtime.env.KV.get(
-        `user:${userId}:session:${sessionId}`,
-    )
+    const sessionData = await db.query.userSessions.findFirst({
+        where: (table, d) => d.eq(table.id, sessionId),
+    })
 
-    if (!serializedSessionData) {
+    if (!sessionData) {
         clearSession()
         return next()
     }
 
-    const sessionData = JSON.parse(serializedSessionData) as UserSession
-
     if (
         sessionData.lastRefreshTimestamp &&
-        Date.now() - sessionData.lastRefreshTimestamp >
-            1000 * sessionTtlSecs * 0.5
+        Date.now() - sessionData.lastRefreshTimestamp.getDate() >
+            sessionTtlMs * 0.5
     ) {
-        sessionData.lastRefreshTimestamp = Date.now()
+        sessionData.lastRefreshTimestamp = new Date()
+        sessionData.expirationTimestamp = new Date(Date.now() + sessionTtlMs)
 
-        await context.locals.runtime.env.KV.put(
-            `user:${userId}:session:${sessionId}`,
-            JSON.stringify(sessionData),
-            { expirationTtl: sessionTtlSecs },
-        )
+        await db
+            .insert(db._.fullSchema.userSessions)
+            .values(sessionData)
+            .onConflictDoUpdate({
+                target: db._.fullSchema.userSessions.id,
+                set: sessionData,
+            })
     }
 
     context.locals.session = sessionData

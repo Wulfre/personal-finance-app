@@ -1,5 +1,7 @@
 import { defineAction } from "astro:actions"
 import { z } from "astro:schema"
+import * as d from "drizzle-orm"
+import { db } from "~/db"
 
 export default defineAction({
     accept: "form",
@@ -15,8 +17,8 @@ export default defineAction({
         context.cookies.delete("sessionId")
         context.cookies.delete("userId")
 
-        await context.locals.runtime.env.KV.delete(
-            `user:${userId}:session:${sessionId}`,
-        )
+        await db
+            .delete(db._.fullSchema.userSessions)
+            .where(d.eq(db._.fullSchema.userSessions.id, sessionId))
     },
 })
