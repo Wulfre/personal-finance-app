@@ -2,27 +2,27 @@
 import Navbar from "./blocks/navbar.astro"
 
 type Props = {
-	title: string
+    title: string
 }
 
 const { title } = Astro.props
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>{title}</title>
-	</head>
-	<body
-		class="text-paper-neutral bg-paper-neutral-bg min-h-[100vh] flex flex-col"
-	>
-		<Navbar />
-		<main class="grid justify-center items-center flex-1">
-			<div>
-				<slot />
-			</div>
-		</main>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title}</title>
+    </head>
+    <body
+        class="text-paper-neutral bg-paper-neutral-bg min-h-[100vh] flex flex-col"
+    >
+        <Navbar />
+        <main class="grid justify-center items-center flex-1">
+            <div>
+                <slot />
+            </div>
+        </main>
+    </body>
 </html>

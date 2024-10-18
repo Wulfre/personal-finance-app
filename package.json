@@ -2,24 +2,24 @@
     "type": "module",
     "scripts": {
         "dev": "astro dev",
-        "build": "astro check && astro build",
-        "preview": "wrangler pages dev ./dist",
-        "type": "wrangler types && astro sync"
+        "build": "biome check ./src && astro check && astro build",
+        "preview": "astro preview"
     },
     "dependencies": {
         "@astrojs/check": "^0.9.4",
         "@astrojs/node": "9.0.0-beta.2",
         "@astrojs/preact": "^3.5.3",
+        "@biomejs/biome": "^1.9.4",
         "@iconify-json/ph": "^1.2.1",
         "@libsql/client": "^0.14.0",
         "@node-rs/argon2": "^2.0.0",
         "@std/collections": "npm:@jsr/std__collections@^1.0.8",
-        "@std/ulid": "npm:@jsr/std__ulid@1.0.0",
+        "@std/ulid": "npm:@jsr/std__ulid@^1.0.0",
         "@unocss/astro": "^0.63.4",
         "@unocss/reset": "^0.63.4",
-        "astro": "5.0.0-beta.4",
-        "drizzle-kit": "^0.25.0",
-        "drizzle-orm": "^0.34.1",
+        "astro": "5.0.0-beta.5",
+        "drizzle-kit": "^0.26.2",
+        "drizzle-orm": "^0.35.2",
         "preact": "^10.24.3",
         "typescript": "^5.6.3",
         "unocss": "^0.63.4"

@@ -1,7 +1,7 @@
-import { drizzle } from "drizzle-orm/connect"
+import { drizzle } from "drizzle-orm/libsql"
 import { schema } from "./tables"
 
-export const db = await drizzle("libsql", {
-    connection: "file:local.db",
+export const db = drizzle({
+    connection: { url: "file:local.db" },
     schema,
 })
