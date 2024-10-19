@@ -1,7 +1,9 @@
 ---
 import Layout from "~/layout.astro"
+
+const { user } = Astro.locals
 ---
 
 <Layout title="Home">
-    Welcome, a!
+    {user && <p>Welcome, {user.username}!</p>}
 </Layout>

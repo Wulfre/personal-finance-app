@@ -1,5 +1,6 @@
 declare namespace App {
     interface Locals {
-        session: import("~/actions/auth/sign-in").UserSession | null
+        session: import("~/middleware/authenticate").LocalSessionData
+        user: import("~/middleware/authenticate").LocalUserData
     }
 }
